@@ -34,13 +34,54 @@
             -webkit-text-fill-color: transparent;
         }
         .subtitle { color: #888; font-size: 14px; margin-bottom: 30px; }
+        .hwid-section { margin-bottom: 24px; }
+        .hwid-label {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .hwid-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #f59e0b;
+            font-family: 'Consolas', monospace;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .hwid-input:focus { border-color: #10b981; }
+        .hwid-input::placeholder { color: #444; letter-spacing: 1px; font-size: 14px; }
+        .gen-btn {
+            margin-top: 16px;
+            background: #10b981;
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .gen-btn:hover { background: #059669; transform: scale(1.02); }
+        .gen-btn:disabled { background: #333; cursor: not-allowed; transform: none; }
         .key-box {
+            display: none;
             background: #1a1a1a;
             border: 2px solid #10b981;
             border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
         }
+        .key-box.visible { display: block; }
         .key-label {
             color: #10b981;
             font-size: 12px;
@@ -49,7 +90,7 @@
             margin-bottom: 10px;
         }
         .key-value {
-            font-family: 'Consolas', 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             font-size: 32px;
             font-weight: bold;
             letter-spacing: 4px;
@@ -57,8 +98,9 @@
             user-select: all;
         }
         .copy-btn {
-            margin-top: 20px;
-            background: #10b981;
+            display: none;
+            margin-top: 16px;
+            background: #2563eb;
             color: #fff;
             border: none;
             padding: 12px 40px;
@@ -68,58 +110,89 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .copy-btn:hover { background: #059669; transform: scale(1.05); }
+        .copy-btn.visible { display: inline-block; }
+        .copy-btn:hover { background: #1d4ed8; transform: scale(1.05); }
         .info { margin-top: 20px; color: #666; font-size: 13px; line-height: 1.6; }
         .timer { color: #f39c12; font-weight: 600; }
         .footer { margin-top: 25px; color: #444; font-size: 12px; }
+        .warn { color: #ef4444; font-size: 12px; margin-top: 8px; }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="title">MINECRAFT UNLOCKER</div>
         <div class="subtitle">by errortechh</div>
-        <div class="key-box">
+
+        <div class="hwid-section">
+            <div class="hwid-label">Enter your HWID (shown in the app)</div>
+            <input type="text" class="hwid-input" id="hwidInput" placeholder="PASTE YOUR HWID" maxlength="12" autocomplete="off">
+        </div>
+
+        <button class="gen-btn" id="genBtn" onclick="generateKey()">Generate Key</button>
+
+        <div class="key-box" id="keyBox">
             <div class="key-label">Your Key</div>
-            <div class="key-value" id="keyDisplay">Loading...</div>
+            <div class="key-value" id="keyDisplay"></div>
         </div>
-        <button class="copy-btn" onclick="copyKey()">Copy Key</button>
+
+        <button class="copy-btn" id="copyBtn" onclick="copyKey()">Copy Key</button>
+
         <div class="info">
-            Paste this key in the Minecraft Unlocker app.<br>
-            Key expires in <span class="timer" id="timer">7 days</span>.
+            This key is locked to your machine and valid for 7 days.<br>
+            Key resets in <span class="timer" id="timer">-</span>.
         </div>
+
         <div class="footer">errortechh &copy; 2026</div>
     </div>
+
     <script>
+        // SHA-256 (Web Crypto)
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
+
+        // Must match keysystem.h exactly
         const KEY_SECRET = "errortechh_mc_2026_";
         const KEY_LENGTH = 16;
+
         function getCurrentWeek() {
             return Math.floor(Date.now() / 1000 / (7 * 24 * 3600));
         }
+
         function getSecondsUntilNextWeek() {
             const week = getCurrentWeek();
             const nextWeekStart = (week + 1) * 7 * 24 * 3600;
             return nextWeekStart - Math.floor(Date.now() / 1000);
         }
-        async function generateKey() {
-            const week = getCurrentWeek();
-            const hash = await sha256(KEY_SECRET + week);
-            return hash.substring(0, KEY_LENGTH).toUpperCase();
-        }
+
         function formatTime(seconds) {
             const days = Math.floor(seconds / 86400);
             const hours = Math.floor((seconds % 86400) / 3600);
             if (days > 0) return days + "d " + hours + "h";
             return hours + "h";
         }
-        async function init() {
-            const key = await generateKey();
+
+        async function generateKey() {
+            const hwid = document.getElementById('hwidInput').value.trim().toUpperCase();
+            if (hwid.length < 8) {
+                alert('Please enter a valid HWID from the app');
+                return;
+            }
+
+            const week = getCurrentWeek();
+            // key = SHA256(secret + week + "_" + hwid).substring(0,16).toUpperCase()
+            const hash = await sha256(KEY_SECRET + week + "_" + hwid);
+            const key = hash.substring(0, KEY_LENGTH).toUpperCase();
+
             document.getElementById('keyDisplay').textContent = key;
+            document.getElementById('keyBox').classList.add('visible');
+            document.getElementById('copyBtn').classList.add('visible');
+            document.getElementById('genBtn').textContent = 'Regenerate Key';
+
+            // Update timer
             function updateTimer() {
                 const secs = getSecondsUntilNextWeek();
                 document.getElementById('timer').textContent = formatTime(secs);
@@ -127,15 +200,25 @@
             updateTimer();
             setInterval(updateTimer, 60000);
         }
+
         function copyKey() {
             const key = document.getElementById('keyDisplay').textContent;
             navigator.clipboard.writeText(key).then(() => {
-                const btn = document.querySelector('.copy-btn');
+                const btn = document.getElementById('copyBtn');
                 btn.textContent = 'Copied!';
                 setTimeout(() => { btn.textContent = 'Copy Key'; }, 2000);
             });
         }
-        init();
+
+        // Auto-uppercase input
+        document.getElementById('hwidInput').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Allow Enter to generate
+        document.getElementById('hwidInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') generateKey();
+        });
     </script>
 </body>
 </html>

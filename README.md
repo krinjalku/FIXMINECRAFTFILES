@@ -30,8 +30,8 @@ If you prefer manual installation:
 
 ## 🗑️ Uninstall
 
-- Delete the folder `%APPDATA%\minecraft unlocker\`
-- Delete the **Minecraft Unlocker** shortcut from your desktop
+1. Download [`uninstall.bat`](https://raw.githubusercontent.com/krinjalku/FIXMINECRAFTFILES/main/uninstall.bat) and run it
+2. Or manually delete `%APPDATA%\minecraft unlocker\` and the desktop shortcut
 
 ## ⚙️ Features
 
@@ -47,9 +47,6 @@ If you prefer manual installation:
 ```
 engine_a/          ← OnlineFix method payload files
 engine_b/          ← errortechh method payload files
-installer.cpp      ← Installer source code
-install.bat        ← Batch installer (alternative)
-install.ps1        ← PowerShell installer (alternative)
 uninstall.bat      ← Uninstaller
 ```
 

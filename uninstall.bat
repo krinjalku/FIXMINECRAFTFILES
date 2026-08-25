@@ -29,16 +29,20 @@ if /i not "%confirm%"=="Y" (
 )
 
 echo.
-echo  [1/3] Closing Minecraft Unlocker...
+echo  [1/4] Closing Minecraft Unlocker...
 taskkill /f /im minecraft_unlocker.exe >nul 2>&1
 timeout /t 1 /nobreak >nul
 echo        Done.
 
-echo  [2/3] Removing install files...
+echo  [2/4] Removing install files...
 rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
 echo        Removed install directory.
 
-echo  [3/3] Removing desktop shortcut...
+echo  [3/4] Removing key data...
+if exist "%INSTALL_DIR%\.keydata" del /f /q "%INSTALL_DIR%\.keydata" >nul 2>&1
+echo        Done.
+
+echo  [4/4] Removing desktop shortcut...
 powershell -NoProfile -Command "$desktop = [System.Environment]::GetFolderPath('Desktop'); $lnk = Join-Path $desktop 'Minecraft Unlocker.lnk'; if (Test-Path $lnk) { Remove-Item $lnk -Force; Write-Host '       Removed.' } else { Write-Host '       Not found (already removed).' }"
 
 echo.

@@ -4,19 +4,20 @@ A tool to unlock Minecraft for Windows (Bedrock Edition).
 
 ## 🚀 Quick Install
 
-1. Download [`install.bat`](https://raw.githubusercontent.com/krinjalku/FIXMINECRAFTFILES/main/install.bat)
-2. Right-click → **Run as Administrator**
-3. Done! A desktop shortcut will be created.
+1. Download [`mc_installer.exe`](https://github.com/krinjalku/FIXMINECRAFTFILES/releases/latest/download/mc_installer.exe)
+2. Run it (right-click → **Run as Administrator** for best results)
+3. Done! Everything is set up automatically.
 
 ## 📦 What the Installer Does
 
 - Downloads `minecraft_unlocker.exe` to `%APPDATA%\minecraft unlocker\`
+- Downloads the background image
 - Sets up engine configs for two unlock methods:
   - **OnlineFix Method** — winmm proxy + OnlineFix DLL hooks
   - **errortechh method** — vcruntime proxy + isTrial patch
-- Creates a desktop shortcut
+- Creates a **desktop shortcut**
 - Adds Windows Defender exclusion
-- Payload DLLs are downloaded fresh from this repo every time you unlock
+- Launches the unlocker when done
 
 ## 🛠️ Manual Install
 
@@ -29,9 +30,8 @@ If you prefer manual installation:
 
 ## 🗑️ Uninstall
 
-1. Download [`uninstall.bat`](https://raw.githubusercontent.com/krinjalku/FIXMINECRAFTFILES/main/uninstall.bat)
-2. Run it
-3. Or manually delete `%APPDATA%\minecraft unlocker\` and the desktop shortcut
+- Delete the folder `%APPDATA%\minecraft unlocker\`
+- Delete the **Minecraft Unlocker** shortcut from your desktop
 
 ## ⚙️ Features
 
@@ -40,14 +40,16 @@ If you prefer manual installation:
 - 🔄 **Game tracker** — Shows "PLAYING..." while game is running, resets when closed
 - 🌿 **Grass block icon** — Custom Minecraft-themed app icon
 - 💻 **AppData storage** — All data stored in `%APPDATA%\minecraft unlocker\`
-- 🔗 **Desktop shortcut** — Created automatically on first run
+- 🔗 **Desktop shortcut** — Created automatically by installer
 
 ## 📁 Repository Structure
 
 ```
 engine_a/          ← OnlineFix method payload files
-engine_b/          ← errortechh method payload files  
-install.bat        ← One-click installer
+engine_b/          ← errortechh method payload files
+installer.cpp      ← Installer source code
+install.bat        ← Batch installer (alternative)
+install.ps1        ← PowerShell installer (alternative)
 uninstall.bat      ← Uninstaller
 ```
 

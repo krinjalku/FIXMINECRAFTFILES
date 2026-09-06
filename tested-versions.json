@@ -1,0 +1,34 @@
+{
+    "engine_a": {
+        "name": "OnlineFix method",
+        "tested_versions": [
+            "1.21.0",
+            "1.21.1",
+            "1.21.2",
+            "1.21.20",
+            "1.21.30",
+            "1.21.40",
+            "1.21.50"
+        ]
+    },
+    "engine_b": {
+        "name": "errortechh method",
+        "tested_versions": [
+            "1.21.0",
+            "1.21.1",
+            "1.21.2",
+            "1.21.20",
+            "1.21.30",
+            "1.21.40",
+            "1.21.50"
+        ]
+    },
+    "engine_c": {
+        "name": "winmm.dll method",
+        "tested_versions": [
+            "1.21.40",
+            "1.21.50"
+        ]
+    },
+    "last_updated": "2026-09-06"
+}

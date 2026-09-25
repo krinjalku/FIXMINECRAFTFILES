@@ -1,0 +1,13 @@
+{
+    "version": "3.0.0",
+    "exe_url": "https://github.com/krinjalku/FIXMINECRAFTFILES/releases/latest/download/errorlauncher.exe",
+    "exe_hash": "dabe497d1ad784d869dc7e428f654c77acdc3c4acb1fc72346feeb7b779e8de5",
+    "installer_url": "https://github.com/krinjalku/FIXMINECRAFTFILES/releases/latest/download/mc_installer.exe",
+    "installer_hash": "5eeabf5710fae4d0f45de48815f4639536901b72646826115a258bd0d14749e0",
+    "changelog": "v3.0.0 - ERRORLAUNCHER\n- Complete rebrand from Minecraft Unlocker to Errorlauncher\n- Liquid glass UI with animated particles\n- Tabbed layout: Unlock, Boost, Spoof, Versions, Packs, Settings\n- FPS Optimizer with GPU priority, network tuning\n- Identity spoofer (SSID/DID/CID)\n- Pack loader for mcpack/mcaddon/zip\n- Version controller framework\n- OTA silent auto-updates\n- 920x640 window with glassmorphism",
+    "engine_configs": {
+        "engine_a": { "version": "1.0" },
+        "engine_b": { "version": "1.0" },
+        "engine_c": { "version": "1.0" }
+    }
+}

